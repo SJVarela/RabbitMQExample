@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  rabbitmqexample.api:
+    image: ${DOCKER_REGISTRY-}rabbitmqexampleapi
+    build:
+      context: .
+      dockerfile: RabbitMQExample.API/Dockerfile
+  bus:
+    image: rabbitmq:3-management
+    ports:
+      - "999:5672"
+      - "15000:15672"
