@@ -6,8 +6,23 @@ services:
     build:
       context: .
       dockerfile: RabbitMQExample.API/Dockerfile
+    depends_on:
+      - bus
   bus:
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
     image: rabbitmq:3-management
+    container_name: rabbit-bus
     ports:
       - "999:5672"
       - "15000:15672"
+  db:
+    image: mongo
+    container_name: mongo-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass123
