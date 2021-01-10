@@ -23,6 +23,8 @@ services:
     image: mongo
     container_name: mongo-db
     restart: always
+    ports:
+      - "27000:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: pass123

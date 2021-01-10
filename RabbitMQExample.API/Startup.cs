@@ -3,8 +3,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using RabbitMQExample.API.Contracts.Services;
 using RabbitMQExample.API.EventBus;
+using RabbitMQExample.API.Services;
+using RabbitMQExample.DataAccess.Access;
+using RabbitMQExample.DataAccess.Config;
+using RabbitMQExample.DataAccess.Contracts;
 
 namespace RabbitMQExample.API
 {
@@ -49,6 +55,12 @@ namespace RabbitMQExample.API
             });
 
             services.AddHostedService<EventBusListener>();
+
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IEventPublisherService, EventPublisherService>();
+            services.Configure<DbSettings>(Configuration.GetSection(nameof(DbSettings)));
+            services.AddSingleton<IDbSettings>(x => x.GetRequiredService<IOptions<DbSettings>>().Value);
+            services.AddSingleton(typeof(IDbClient<>), typeof(DbClient<>));
         }
     }
 }
