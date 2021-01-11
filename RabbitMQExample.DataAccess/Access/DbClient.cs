@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using RabbitMQExample.DataAccess.Config;
 using RabbitMQExample.DataAccess.Contracts;
 using RabbitMQExample.DataAccess.Models.Core;
+using System.Collections.Generic;
 
 namespace RabbitMQExample.DataAccess.Access
 {
@@ -25,6 +26,11 @@ namespace RabbitMQExample.DataAccess.Access
         {
             _collection.InsertOne(item);
             return item;
+        }
+
+        public IEnumerable<T> GetItems()
+        {
+            return _collection.Find(x => true).ToList();
         }
     }
 }

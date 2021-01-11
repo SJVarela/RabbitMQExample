@@ -3,6 +3,7 @@ using RabbitMQExample.API.Contracts.Services;
 using RabbitMQExample.API.Models;
 using RabbitMQExample.DataAccess.Contracts;
 using RabbitMQExample.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace RabbitMQExample.API.Services
 {
@@ -15,6 +16,11 @@ namespace RabbitMQExample.API.Services
         {
             _dbClient = dbClient;
             _eventPublisher = eventPublisher;
+        }
+
+        public IEnumerable<ItemDto> GetItems()
+        {
+            return _dbClient.GetItems().Adapt<IEnumerable<ItemDto>>();
         }
 
         public ItemDto SaveItem(ItemDto item)
