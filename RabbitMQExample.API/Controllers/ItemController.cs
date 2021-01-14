@@ -24,6 +24,7 @@ namespace RabbitMQExample.API.Controllers
         public IActionResult GetItems()
         {
             var result = _itemService.GetItems();
+            _logger.LogInformation("Testing123");
             return Ok(result);
         }
 
