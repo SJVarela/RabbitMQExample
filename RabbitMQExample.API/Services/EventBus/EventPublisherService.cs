@@ -1,12 +1,13 @@
 ﻿using RabbitMQ.Client;
+using RabbitMQExample.API.Contracts.Services;
 using System.Text;
 using System.Text.Json;
 
 namespace RabbitMQExample.API.EventBus
 {
-    public class EventBusPublisher
+    public class EventPublisherService : IEventPublisherService
     {
-        public void PublishEvent(object message)
+        public void Publish(object message)
         {
             ConnectionFactory factory = new ConnectionFactory { HostName = "host.docker.internal", Port = 999 };
             using var connection = factory.CreateConnection();
